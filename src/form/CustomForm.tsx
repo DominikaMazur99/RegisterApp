@@ -46,7 +46,14 @@ function CustomForm() {
                 value={formData.emailAdress}
                 setFormData={setFormData}
             />
-            <CustomSlider min={8} max={100} step={1} initialValue={8} />
+            <CustomSlider
+                min={8}
+                max={100}
+                step={1}
+                field="age"
+                value={formData.age}
+                setFormData={setFormData}
+            />
             {/* <DragAndDrop onFileUpload={() => {}} /> */}
             <CustomDatePicker />
             <button className="rounded-lg p-2 focus:outline-none focus:ring-2 bg-inactivePurple text-white">

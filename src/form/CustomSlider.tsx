@@ -5,19 +5,25 @@ interface SliderProps {
     min: number;
     max: number;
     step: number;
-    initialValue: number;
+    field: string;
+    value: number;
+    setFormData: (update: (prev: any) => any) => void;
 }
 
 const CustomSlider: React.FC<SliderProps> = ({
     min,
     max,
     step,
-    initialValue,
+    value,
+    field,
+    setFormData,
 }) => {
-    const [value, setValue] = useState(initialValue);
-
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(Number(event.target.value));
+        const newValue = Number(event.target.value);
+        setFormData((prev) => ({
+            ...prev,
+            [field]: newValue,
+        }));
     };
 
     const calculatePosition = () => {
