@@ -1,0 +1,8 @@
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #761be4; /* Purple color for the knob */
+}
