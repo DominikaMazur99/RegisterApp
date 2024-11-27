@@ -11,6 +11,7 @@ module.exports = {
                 errorBackground: "#FEECEC",
                 errorBorder: "#ED4545",
                 textColor: "#000853",
+                disabledTextColor: "#898DA9",
             },
         },
     },

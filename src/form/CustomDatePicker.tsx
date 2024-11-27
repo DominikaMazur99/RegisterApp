@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { reusableFetchFunction } from "../api/api";
+import arrowRight from "../icons/arrowRightIcon.svg";
+import Arrow from "../icons/ArrowIcon";
 
 interface Holiday {
+    country: string;
+    iso: string;
+    year: number;
     date: string;
+    day: string;
     name: string;
     type: string;
 }
@@ -9,7 +16,7 @@ interface Holiday {
 const CustomDatePicker: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [holidays, setHolidays] = useState<Holiday[]>([]); // Initialize as an empty array
+    const [holidays, setHolidays] = useState<Holiday[]>([]);
     const [info, setInfo] = useState<string | null>(null);
 
     const daysInMonth = (month: number, year: number) => {
@@ -71,27 +78,17 @@ const CustomDatePicker: React.FC = () => {
         return date.getDay() === 0 || holiday?.type === "NATIONAL_HOLIDAY";
     };
 
-    const fetchHolidays = async () => {
-        try {
-            const response = await fetch(
-                "https://api.api-ninjas.com/v1/holidays?country=PL&year=2024",
-                {
-                    headers: {
-                        "X-Api-Key": "jLRG8GyCMYw2BJkIWF7S4w==WuRlBupy7vgLLXvV",
-                    },
-                }
-            );
-            const data: Holiday[] = await response.json(); // Ensure it's an array
-            console.log(data);
-            setHolidays(data || []); // Safely set holidays or an empty array
-        } catch (error) {
-            console.error("Error fetching holidays:", error);
-            setHolidays([]); // Fallback to an empty array if the fetch fails
-        }
+    const fetchHolidays = async (
+        setHolidays: (holidays: Holiday[]) => void
+    ) => {
+        await reusableFetchFunction<Holiday[]>({
+            url: "https://api.api-ninjas.com/v1/holidays?country=PL&year=2024",
+            handler: setHolidays,
+        });
     };
 
     useEffect(() => {
-        fetchHolidays();
+        fetchHolidays(setHolidays);
     }, []);
 
     const renderCalendar = () => {
@@ -150,11 +147,11 @@ const CustomDatePicker: React.FC = () => {
                             }
                             className={`flex-1 h-10 flex items-center justify-center cursor-pointer rounded-lg ${
                                 disabled
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                                    ? "text-disabledTextColor cursor-not-allowed"
                                     : isSelected
-                                    ? "bg-purple-500 text-white"
+                                    ? "bg-defaultPurple text-white"
                                     : isToday
-                                    ? "bg-purple-100 text-purple-700"
+                                    ? "text-defaultPurple"
                                     : "hover:bg-purple-50"
                             }`}
                         >
@@ -179,17 +176,16 @@ const CustomDatePicker: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col gap-4 max-w-sm mx-auto">
+        <div className="flex flex-col gap-4">
             <h1 className="text-xl font-bold text-navy">Your workout</h1>
             <label className="text-sm text-gray-700 font-medium">Date</label>
             <div className="p-4 border border-purple-300 rounded-lg shadow-md bg-white">
-                {/* Calendar Header */}
                 <div className="flex items-center justify-between mb-4">
                     <button
                         onClick={handlePrevMonth}
                         className="text-purple-500 font-bold"
                     >
-                        &lt;
+                        <Arrow direction="right" />
                     </button>
                     <h2 className="text-sm font-semibold text-gray-800">
                         {currentMonth.toLocaleString("default", {
@@ -201,7 +197,7 @@ const CustomDatePicker: React.FC = () => {
                         onClick={handleNextMonth}
                         className="text-purple-500 font-bold"
                     >
-                        &gt;
+                        <Arrow direction="left" />
                     </button>
                 </div>
                 {/* Calendar Days */}

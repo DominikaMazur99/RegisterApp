@@ -5,7 +5,7 @@ import DragAndDrop from "./DragAndDrop";
 
 function CustomForm() {
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 h-full px-24 overflow-y-auto p-4">
             <CustomInput label="First Name" />
             <CustomInput label="Last Name" />
             <CustomInput label="Email Adress" />

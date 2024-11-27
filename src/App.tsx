@@ -1,8 +1,9 @@
+import React from "react";
 import CustomForm from "./form/CustomForm";
 
 function App() {
     return (
-        <div className="bg-customBackground w-screen h-screen flex items-center justify-center">
+        <div className="bg-customBackground overflow-hidden">
             <CustomForm />
         </div>
     );
