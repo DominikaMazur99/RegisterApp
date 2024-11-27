@@ -24,7 +24,8 @@ const CustomDatePicker: React.FC = () => {
     };
 
     const getStartDayOfMonth = (month: number, year: number) => {
-        return new Date(year, month, 1).getDay();
+        const day = new Date(year, month, 1).getDay();
+        return (day + 6) % 7; // Przesuwa niedzielę (0) na koniec
     };
 
     const handlePrevMonth = () => {
@@ -75,6 +76,7 @@ const CustomDatePicker: React.FC = () => {
             (holiday) =>
                 new Date(holiday.date).toDateString() === date.toDateString()
         );
+
         return date.getDay() === 0 || holiday?.type === "NATIONAL_HOLIDAY";
     };
 
@@ -188,7 +190,7 @@ const CustomDatePicker: React.FC = () => {
                         <Arrow direction="right" />
                     </button>
                     <h2 className="text-sm font-semibold text-gray-800">
-                        {currentMonth.toLocaleString("default", {
+                        {currentMonth.toLocaleString("en-US", {
                             month: "long",
                         })}{" "}
                         {currentMonth.getFullYear()}
@@ -200,14 +202,21 @@ const CustomDatePicker: React.FC = () => {
                         <Arrow direction="left" />
                     </button>
                 </div>
-                {/* Calendar Days */}
                 <div className="grid grid-cols-7 gap-1 text-center text-sm text-gray-600 mb-2">
-                    {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day) => (
-                        <div key={day} className="font-semibold">
-                            {day}
-                        </div>
-                    ))}
+                    {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(
+                        (day, index) => (
+                            <div
+                                key={day}
+                                className={`font-semibold ${
+                                    index === 6 ? "text-disabledTextColor" : ""
+                                }`}
+                            >
+                                {day}
+                            </div>
+                        )
+                    )}
                 </div>
+
                 {/* Calendar Body */}
                 <div>{renderCalendar()}</div>
             </div>
