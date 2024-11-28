@@ -9,7 +9,7 @@ interface IFormData {
     secondName: string;
     emailAdress: string;
     age: number;
-    files: any[];
+    file: any;
     date: string;
 }
 
@@ -19,9 +19,10 @@ function CustomForm() {
         secondName: "",
         emailAdress: "",
         age: 8,
-        files: [],
+        file: null,
         date: "",
     });
+
     console.log(formData);
     return (
         <div className="flex flex-col gap-4 h-full px-24 overflow-y-auto p-4">
@@ -54,7 +55,7 @@ function CustomForm() {
                 value={formData.age}
                 setFormData={setFormData}
             />
-            {/* <DragAndDrop onFileUpload={() => {}} /> */}
+            <DragAndDrop setFormData={setFormData} />
             <CustomDatePicker />
             <button className="rounded-lg p-2 focus:outline-none focus:ring-2 bg-inactivePurple text-white">
                 Send Application

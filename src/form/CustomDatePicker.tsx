@@ -181,57 +181,79 @@ const CustomDatePicker: React.FC = () => {
         <div className="flex flex-col gap-4">
             <p className="font-sans font-normal leading-5 text-textColor text-xl">
                 Personal Info
-            </p>{" "}
-            <div className="flex flex-col gap-0.025">
-                <label className="text-sm text-gray-700 font-medium">
-                    Date
-                </label>
-                <div className="p-4 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-sm h-auto max-h-[292px]">
-                    <div className="flex items-center justify-between mb-4">
-                        <button
-                            onClick={handlePrevMonth}
-                            className="text-purple-500 font-bold"
-                        >
-                            <Arrow direction="right" />
-                        </button>
-                        <h2 className="text-sm font-semibold text-gray-800">
-                            {currentMonth.toLocaleString("en-US", {
-                                month: "long",
-                            })}{" "}
-                            {currentMonth.getFullYear()}
-                        </h2>
-                        <button
-                            onClick={handleNextMonth}
-                            className="text-purple-500 font-bold"
-                        >
-                            <Arrow direction="left" />
-                        </button>
-                    </div>
-                    <div className="grid grid-cols-7 gap-1 text-center text-sm text-gray-600 mb-2">
-                        {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(
-                            (day, index) => (
-                                <div
-                                    key={day}
-                                    className={`font-semibold ${
-                                        index === 6
-                                            ? "text-disabledTextColor"
-                                            : ""
-                                    }`}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {/* Sekcja Date */}
+                <div className="col-span-3">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm text-gray-700 font-medium">
+                            Date
+                        </label>
+                        <div className="p-4 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-sm h-auto max-h-[292px]">
+                            <div className="flex items-center justify-between mb-4">
+                                <button
+                                    onClick={handlePrevMonth}
+                                    className="text-purple-500 font-bold"
                                 >
-                                    {day}
+                                    <Arrow direction="right" />
+                                </button>
+                                <h2 className="text-sm font-semibold text-gray-800">
+                                    {currentMonth.toLocaleString("en-US", {
+                                        month: "long",
+                                    })}{" "}
+                                    {currentMonth.getFullYear()}
+                                </h2>
+                                <button
+                                    onClick={handleNextMonth}
+                                    className="text-purple-500 font-bold"
+                                >
+                                    <Arrow direction="left" />
+                                </button>
+                            </div>
+                            <div className="grid grid-cols-7 gap-1 text-center text-sm text-gray-600 mb-2">
+                                {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(
+                                    (day, index) => (
+                                        <div
+                                            key={day}
+                                            className={`font-semibold ${
+                                                index === 6
+                                                    ? "text-disabledTextColor"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {day}
+                                        </div>
+                                    )
+                                )}
+                            </div>
+
+                            <div>{renderCalendar()}</div>
+                        </div>
+                        {info && (
+                            <p className="text-sm text-gray-700">
+                                <span className="font-semibold">{info}</span>
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                <div className="col-span-1 flex flex-col">
+                    <label className="text-sm text-gray-700 font-medium mb-2">
+                        Time
+                    </label>
+                    <div className="grid grid-cols-1 gap-4">
+                        {["12:00", "14:30", "16:00", "18:00"].map(
+                            (hour, index) => (
+                                <div
+                                    key={index}
+                                    className="p-2 border border-purple-300 rounded-lg shadow-md bg-white text-center"
+                                >
+                                    {hour}
                                 </div>
                             )
                         )}
                     </div>
-
-                    {/* Calendar Body */}
-                    <div>{renderCalendar()}</div>
                 </div>
-                {info && (
-                    <p className="text-sm text-gray-700">
-                        <span className="font-semibold">{info}</span>
-                    </p>
-                )}
             </div>
         </div>
     );
