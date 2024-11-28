@@ -213,14 +213,14 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
             <p className="font-sans font-normal leading-5 text-textColor text-xl">
                 Your workout
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-[4fr_1fr] gap-4 w-full">
                 {/* Sekcja Date */}
-                <div className="col-span-1 md:col-span-3">
-                    <div className="flex flex-col gap-0">
+                <div className="col-span-1 md:col-span-1 w-full">
+                    <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700 font-medium">
                             Date
                         </label>
-                        <div className="p-2 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-sm h-auto max-h-[292px]">
+                        <div className="p-4 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-full h-auto">
                             <div className="flex items-center justify-between mb-4">
                                 <button
                                     onClick={handlePrevMonth}
@@ -269,12 +269,13 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                     </div>
                 </div>
 
+                {/* Sekcja Time */}
                 {value && (
-                    <div className="col-span-1 md:col-span-1 md:flex md:flex-col md:items-start">
-                        <label className="text-sm text-gray-700 font-medium md:mb-2">
+                    <div className="col-span-1 md:col-span-1 w-full md:flex md:flex-col ">
+                        <label className="text-sm text-gray-700 font-medium md:mb-2 md:items-start">
                             Time
                         </label>
-                        <div className="grid grid-cols-3 md:grid-cols-1 gap-2">
+                        <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:items-end">
                             {["12:00", "14:00", "16:30", "18:30", "20:00"].map(
                                 (hour, index) => (
                                     <div
