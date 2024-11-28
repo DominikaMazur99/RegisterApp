@@ -11,6 +11,7 @@ interface IFormData {
     age: number;
     file: any;
     date: Date | null;
+    hour: string | null;
 }
 
 function CustomForm() {
@@ -21,6 +22,7 @@ function CustomForm() {
         age: 8,
         file: null,
         date: null,
+        hour: null,
     });
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isDisabled, setIsDisabled] = useState(true);
@@ -31,7 +33,8 @@ function CustomForm() {
             formData.secondName.length <= 0 ||
             formData.emailAdress.length <= 0 ||
             !formData.file ||
-            !formData.date;
+            !formData.date ||
+            !formData.hour;
 
         if (disabledCase) {
             setIsDisabled(true);

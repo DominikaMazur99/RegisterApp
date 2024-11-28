@@ -66,13 +66,6 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
             setInfo(null);
         }
 
-        // Jeśli wybrana godzina istnieje, ustaw ją w nowej dacie
-        if (selectedHour) {
-            const [hours, minutes] = selectedHour.split(":").map(Number);
-            clickedDate.setHours(hours, minutes, 0, 0); // Ustaw godzinę i minuty
-        }
-
-        // Sprawdzamy, czy data nie jest niedzielą lub świętem narodowym
         if (
             clickedHoliday?.type !== "NATIONAL_HOLIDAY" &&
             clickedDate.getDay() !== 0
@@ -193,19 +186,13 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     };
 
     const handleTimeClick = (hour: string) => {
-        if (!value) return; // Upewnij się, że data została wybrana wcześniej
-
-        const [hours, minutes] = hour.split(":").map(Number);
-        const updatedDate = new Date(value);
-        updatedDate.setHours(hours, minutes, 0, 0); // Ustaw godzinę, minuty i sekundy
-
         setFormData((prev) => ({
             ...prev,
-            date: updatedDate,
+            hour: hour, // Ustawiamy tylko godzinę
         }));
         setSelectedHour(hour);
 
-        console.log("Updated Date with Time:", updatedDate);
+        console.log("Selected Hour:", hour);
     };
 
     return (
