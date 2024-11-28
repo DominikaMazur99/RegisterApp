@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import CancelIcon from "../icons/CancelIcon";
-
-interface DragAndDropProps {
-    setFormData: (update: (prev: any) => any) => void;
-}
+import { DragAndDropProps } from "../interfaces/interfaces";
 
 const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
     const [isDragging, setIsDragging] = useState(false);

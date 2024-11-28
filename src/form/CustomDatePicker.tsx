@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { reusableFetchFunction } from "../api/api";
-import arrowRight from "../icons/arrowRightIcon.svg";
 import Arrow from "../icons/ArrowIcon";
-
-interface Holiday {
-    country: string;
-    iso: string;
-    year: number;
-    date: string;
-    day: string;
-    name: string;
-    type: string;
-}
-
-interface ICustomDatePicker {
-    setFormData: (update: (prev: any) => any) => void;
-    value: Date | null;
-}
+import {
+    availableHours,
+    daysInMonth,
+    daysOfTheWeek,
+    getStartDayOfMonth,
+} from "../helpers/helpers";
+import { Holiday, ICustomDatePicker } from "../interfaces/interfaces";
 
 const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     setFormData,
@@ -26,15 +17,6 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     const [holidays, setHolidays] = useState<Holiday[]>([]);
     const [info, setInfo] = useState<string | null>(null);
     const [selectedHour, setSelectedHour] = useState<string | null>(null);
-
-    const daysInMonth = (month: number, year: number) => {
-        return new Date(year, month + 1, 0).getDate();
-    };
-
-    const getStartDayOfMonth = (month: number, year: number) => {
-        const day = new Date(year, month, 1).getDay();
-        return (day + 6) % 7; // Przesuwa niedzielę (0) na koniec
-    };
 
     const handlePrevMonth = () => {
         setCurrentMonth(
@@ -74,7 +56,6 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                 ...prev,
                 date: clickedDate,
             }));
-            console.log("Selected Date:", clickedDate);
         }
     };
 
@@ -188,12 +169,12 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     const handleTimeClick = (hour: string) => {
         setFormData((prev) => ({
             ...prev,
-            hour: hour, // Ustawiamy tylko godzinę
+            hour: hour,
         }));
         setSelectedHour(hour);
-
-        console.log("Selected Hour:", hour);
     };
+
+    console.log(info);
 
     return (
         <div className="flex flex-col gap-4">
@@ -201,7 +182,6 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                 Your workout
             </p>
             <div className="grid grid-cols-1 md:grid-cols-[4fr_1fr] gap-4 w-full">
-                {/* Sekcja Date */}
                 <div className="col-span-1 md:col-span-1 w-full">
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700 font-medium">
@@ -229,23 +209,20 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                                 </button>
                             </div>
                             <div className="grid grid-cols-7 gap-1 text-center text-sm text-gray-600 mb-2">
-                                {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(
-                                    (day, index) => (
-                                        <div
-                                            key={day}
-                                            className={`w-10 h-10 flex items-center justify-center font-semibold ${
-                                                index === 6
-                                                    ? "text-disabledTextColor"
-                                                    : ""
-                                            }`}
-                                        >
-                                            {day}
-                                        </div>
-                                    )
-                                )}
+                                {daysOfTheWeek.map((day, index) => (
+                                    <div
+                                        key={day}
+                                        className={`w-10 h-10 flex items-center justify-center font-semibold ${
+                                            index === 6
+                                                ? "text-disabledTextColor"
+                                                : ""
+                                        }`}
+                                    >
+                                        {day}
+                                    </div>
+                                ))}
                             </div>
 
-                            {/* Calendar Body */}
                             <div>{renderCalendar()}</div>
                         </div>
                         {info && (
@@ -256,28 +233,25 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                     </div>
                 </div>
 
-                {/* Sekcja Time */}
                 {value && (
                     <div className="col-span-1 md:col-span-1 w-full md:flex md:flex-col ">
                         <label className="text-sm text-gray-700 font-medium md:mb-2 md:items-start">
                             Time
                         </label>
                         <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:items-end">
-                            {["12:00", "14:00", "16:30", "18:30", "20:00"].map(
-                                (hour, index) => (
-                                    <div
-                                        key={index}
-                                        className={`p-2 border border-inactivePurple rounded-lg shadow-md text-center hover:cursor-pointer transition-all ${
-                                            selectedHour === hour
-                                                ? "border-defaultPurple bg-white"
-                                                : "bg-white hover:border-defaultPurple"
-                                        }`}
-                                        onClick={() => handleTimeClick(hour)}
-                                    >
-                                        {hour}
-                                    </div>
-                                )
-                            )}
+                            {availableHours.map((hour, index) => (
+                                <div
+                                    key={index}
+                                    className={`p-2 border border-inactivePurple rounded-lg shadow-md text-center hover:cursor-pointer transition-all ${
+                                        selectedHour === hour
+                                            ? "border-defaultPurple bg-white"
+                                            : "bg-white hover:border-defaultPurple"
+                                    }`}
+                                    onClick={() => handleTimeClick(hour)}
+                                >
+                                    {hour}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}

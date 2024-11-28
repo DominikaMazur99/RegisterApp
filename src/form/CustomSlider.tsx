@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import "./form.css";
-
-interface SliderProps {
-    min: number;
-    max: number;
-    step: number;
-    field: string;
-    value: number;
-    setFormData: (update: (prev: any) => any) => void;
-}
+import { SliderProps } from "../interfaces/interfaces";
 
 const CustomSlider: React.FC<SliderProps> = ({
     min,

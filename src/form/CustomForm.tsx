@@ -3,16 +3,8 @@ import CustomDatePicker from "./CustomDatePicker";
 import CustomInput from "./CustomInput";
 import CustomSlider from "./CustomSlider";
 import DragAndDrop from "./DragAndDrop";
-
-interface IFormData {
-    firstName: string;
-    secondName: string;
-    emailAdress: string;
-    age: number;
-    file: any;
-    date: Date | null;
-    hour: string | null;
-}
+import { IFormData } from "../interfaces/interfaces";
+import { submitFormFunction } from "../api/api";
 
 function CustomForm() {
     const [formData, setFormData] = useState<IFormData>({
@@ -25,7 +17,8 @@ function CustomForm() {
         hour: null,
     });
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
+    const [responseMessage, setResponseMessage] = useState<string>("");
 
     useEffect(() => {
         const disabledCase =
@@ -43,9 +36,30 @@ function CustomForm() {
         }
     }, [formData]);
 
-    console.log(formData, isDisabled);
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await submitFormFunction({
+            url: "http://letsworkout.pl/submit",
+            formData,
+            handler: (response) => {
+                if (response.error) {
+                    setResponseMessage(
+                        "Failed to submit form. Please try again."
+                    );
+                } else {
+                    setResponseMessage("Form submitted successfully!");
+                }
+                console.log("Server response:", response);
+            },
+        });
+    };
+
+    console.log(responseMessage);
     return (
-        <div className="flex flex-col gap-4 h-full px-24 overflow-y-auto p-4">
+        <form
+            onSubmit={handleSubmit}
+            className="flex flex-col gap-10 h-full overflow-y-auto px-4 sm:px-10 md:px-20 lg:px-40 xl:px-80 py-10 max-w-screen-lg mx-auto"
+        >
             <p className="font-sans font-normal leading-5 text-textColor text-xl">
                 Personal Info
             </p>
@@ -90,10 +104,11 @@ function CustomForm() {
                         : "bg-defaultPurple hover:bg-hoverPurple"
                 }`}
                 disabled={isDisabled}
+                type="submit"
             >
                 Send Application
             </button>
-        </div>
+        </form>
     );
 }
 

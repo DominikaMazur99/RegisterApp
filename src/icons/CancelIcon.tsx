@@ -12,9 +12,15 @@ const CancelIcon: React.FC<ICancelIcon> = ({ onClick }) => {
             height="24"
             viewBox="0 0 24 24"
             onClick={onClick}
-            className="cursor-pointer"
+            className="cursor-pointer transition-all duration-300 hover:fill-red-600 hover:stroke-red-600"
         >
-            <circle cx="12" cy="12" r="12" fill="#001A72" />
+            <circle
+                cx="12"
+                cy="12"
+                r="12"
+                fill="#001A72"
+                className="hover:fill-red-600"
+            />
             <line
                 x1="8"
                 y1="8"
@@ -23,6 +29,7 @@ const CancelIcon: React.FC<ICancelIcon> = ({ onClick }) => {
                 stroke="#FFFFFF"
                 strokeWidth="2"
                 strokeLinecap="round"
+                className="hover:stroke-red-600"
             />
             <line
                 x1="16"
@@ -32,6 +39,7 @@ const CancelIcon: React.FC<ICancelIcon> = ({ onClick }) => {
                 stroke="#FFFFFF"
                 strokeWidth="2"
                 strokeLinecap="round"
+                className="hover:stroke-red-600"
             />
         </svg>
     );

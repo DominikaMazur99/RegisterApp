@@ -1,15 +1,7 @@
 import { useState } from "react";
 import ErrorIcon from "../icons/ErrorIcon";
 import { validateEmail } from "../helpers/helpers";
-
-interface ICustomInput {
-    label: string;
-    field: string;
-    value: string;
-    errorMessage: string;
-    setErrorMessage: (error: string) => void;
-    setFormData: (update: (prev: any) => any) => void;
-}
+import { ICustomInput } from "../interfaces/interfaces";
 
 const CustomInput: React.FC<ICustomInput> = ({
     label,

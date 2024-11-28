@@ -1,3 +1,5 @@
+import { IFormData } from "../interfaces/interfaces";
+
 interface FetchFunctionParams<T> {
     url: string;
     method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -6,7 +8,13 @@ interface FetchFunctionParams<T> {
     handler: (data: T) => void;
 }
 
-export const reusableFetchFunction = async <T>({
+interface SubmitFormParams {
+    url: string;
+    formData: IFormData;
+    handler: (response: any) => void;
+}
+
+const reusableFetchFunction = async <T>({
     url,
     method = "GET",
     headers = {},
@@ -45,3 +53,40 @@ export const reusableFetchFunction = async <T>({
         handler([] as T);
     }
 };
+
+const submitFormFunction = async ({
+    url,
+    formData,
+    handler,
+}: SubmitFormParams): Promise<void> => {
+    try {
+        const processedFormData = {
+            ...formData,
+            date: formData.date
+                ? new Date(formData.date).toISOString().split("T")[0]
+                : null,
+        };
+
+        const body = JSON.stringify(processedFormData);
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        handler(data);
+    } catch (error) {
+        console.error("Error in submitFormFunction:", error);
+        handler({ error: "Failed to submit form" });
+    }
+};
+
+export { reusableFetchFunction, submitFormFunction };
