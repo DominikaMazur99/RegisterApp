@@ -25,6 +25,7 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [holidays, setHolidays] = useState<Holiday[]>([]);
     const [info, setInfo] = useState<string | null>(null);
+    const [selectedHour, setSelectedHour] = useState<string | null>(null);
 
     const daysInMonth = (month: number, year: number) => {
         return new Date(year, month + 1, 0).getDate();
@@ -65,9 +66,16 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
             setInfo(null);
         }
 
+        // Jeśli wybrana godzina istnieje, ustaw ją w nowej dacie
+        if (selectedHour) {
+            const [hours, minutes] = selectedHour.split(":").map(Number);
+            clickedDate.setHours(hours, minutes, 0, 0); // Ustaw godzinę i minuty
+        }
+
+        // Sprawdzamy, czy data nie jest niedzielą lub świętem narodowym
         if (
             clickedHoliday?.type !== "NATIONAL_HOLIDAY" &&
-            clickedDate.getDay() !== 0 // Wyklucz niedziele
+            clickedDate.getDay() !== 0
         ) {
             setFormData((prev) => ({
                 ...prev,
@@ -184,6 +192,22 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
         return weeks;
     };
 
+    const handleTimeClick = (hour: string) => {
+        if (!value) return; // Upewnij się, że data została wybrana wcześniej
+
+        const [hours, minutes] = hour.split(":").map(Number);
+        const updatedDate = new Date(value);
+        updatedDate.setHours(hours, minutes, 0, 0); // Ustaw godzinę, minuty i sekundy
+
+        setFormData((prev) => ({
+            ...prev,
+            date: updatedDate,
+        }));
+        setSelectedHour(hour);
+
+        console.log("Updated Date with Time:", updatedDate);
+    };
+
     return (
         <div className="flex flex-col gap-4">
             <p className="font-sans font-normal leading-5 text-textColor text-xl">
@@ -192,11 +216,11 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Sekcja Date */}
                 <div className="col-span-1 md:col-span-3">
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-0">
                         <label className="text-sm text-gray-700 font-medium">
                             Date
                         </label>
-                        <div className="p-4 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-sm h-auto max-h-[292px]">
+                        <div className="p-2 border border-purple-300 rounded-lg shadow-md bg-white w-full max-w-sm h-auto max-h-[292px]">
                             <div className="flex items-center justify-between mb-4">
                                 <button
                                     onClick={handlePrevMonth}
@@ -255,7 +279,12 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                                 (hour, index) => (
                                     <div
                                         key={index}
-                                        className="p-2 border border-purple-300 rounded-lg shadow-md bg-white text-center"
+                                        className={`p-2 border border-inactivePurple rounded-lg shadow-md text-center hover:cursor-pointer transition-all ${
+                                            selectedHour === hour
+                                                ? "border-defaultPurple bg-white"
+                                                : "bg-white hover:border-defaultPurple"
+                                        }`}
+                                        onClick={() => handleTimeClick(hour)}
                                     >
                                         {hour}
                                     </div>
