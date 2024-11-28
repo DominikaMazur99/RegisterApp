@@ -10,7 +10,7 @@ interface IFormData {
     emailAdress: string;
     age: number;
     file: any;
-    date: string;
+    date: Date | null;
 }
 
 function CustomForm() {
@@ -20,7 +20,7 @@ function CustomForm() {
         emailAdress: "",
         age: 8,
         file: null,
-        date: "",
+        date: null,
     });
 
     console.log(formData);
@@ -56,7 +56,7 @@ function CustomForm() {
                 setFormData={setFormData}
             />
             <DragAndDrop setFormData={setFormData} />
-            <CustomDatePicker />
+            <CustomDatePicker setFormData={setFormData} value={formData.date} />
             <button className="rounded-lg p-2 focus:outline-none focus:ring-2 bg-inactivePurple text-white">
                 Send Application
             </button>
