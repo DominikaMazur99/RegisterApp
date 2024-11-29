@@ -22,7 +22,7 @@ const reusableFetchFunction = async <T>({
     handler,
 }: FetchFunctionParams<T>): Promise<void> => {
     try {
-        const apiKey = process.env.REACT_APP_API_KEY;
+        const apiKey = "jLRG8GyCMYw2BJkIWF7S4w==WuRlBupy7vgLLXvV";
 
         if (!apiKey) {
             throw new Error(
