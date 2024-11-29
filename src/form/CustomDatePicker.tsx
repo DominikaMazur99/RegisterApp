@@ -178,8 +178,6 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
         setSelectedHour(hour);
     };
 
-    console.log(info);
-
     return (
         <div className="flex flex-col gap-4">
             <p className="font-sans font-normal leading-5 text-textColor text-xl">

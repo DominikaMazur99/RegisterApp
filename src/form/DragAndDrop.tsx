@@ -31,7 +31,6 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        console.log(file);
         if (file) {
             setFileName(file.name);
             setFormData((prev) => ({
@@ -41,7 +40,9 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
         }
     };
 
-    const handleFileDelete = () => {
+    const handleFileDelete = (e: any) => {
+        e.stopPropagation();
+        e.preventDefault();
         setFileName(null);
         setFormData((prev) => ({
             ...prev,
@@ -75,8 +76,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
                             </p>
                             <CancelIcon
                                 onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleFileDelete();
+                                    handleFileDelete(e);
                                 }}
                             />
                         </div>
