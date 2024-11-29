@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/DominikaMazur99/RegisterApp/static/css/main.a559a16d.css",
+    "main.js": "/DominikaMazur99/RegisterApp/static/js/main.8aede21b.js",
+    "static/js/453.242d340d.chunk.js": "/DominikaMazur99/RegisterApp/static/js/453.242d340d.chunk.js",
+    "index.html": "/DominikaMazur99/RegisterApp/index.html",
+    "main.a559a16d.css.map": "/DominikaMazur99/RegisterApp/static/css/main.a559a16d.css.map",
+    "main.8aede21b.js.map": "/DominikaMazur99/RegisterApp/static/js/main.8aede21b.js.map",
+    "453.242d340d.chunk.js.map": "/DominikaMazur99/RegisterApp/static/js/453.242d340d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a559a16d.css",
+    "static/js/main.8aede21b.js"
+  ]
+}
