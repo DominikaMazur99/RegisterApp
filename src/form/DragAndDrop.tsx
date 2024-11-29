@@ -31,6 +31,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
+        console.log(file);
         if (file) {
             setFileName(file.name);
             setFormData((prev) => ({
@@ -47,10 +48,9 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
             file: null,
         }));
     };
-
     return (
         <div className="flex flex-col gap-2">
-            <p className="font-sans font-normal text-base leading-5 text-textColor">
+            <p className="font-sans font-normal text-base leading-5  text-textColor text-[16px]">
                 Photo
             </p>
             <div
@@ -70,7 +70,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
                     />
                     {fileName ? (
                         <div className="flex flex-row gap-1 justify-center items-center text-center">
-                            <p className="text-textColor font-medium text-sm">
+                            <p className="text-textColor font-medium text-[16px]">
                                 {fileName}
                             </p>
                             <CancelIcon
@@ -81,7 +81,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
                             />
                         </div>
                     ) : (
-                        <div className="text-gray-500 text-sm">
+                        <div className="text-[#898DA9] text-[16px]">
                             <span className="text-purple-700 underline">
                                 Upload a file
                             </span>{" "}

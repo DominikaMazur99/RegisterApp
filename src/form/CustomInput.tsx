@@ -44,7 +44,7 @@ const CustomInput: React.FC<ICustomInput> = ({
 
     return (
         <div className="flex flex-col gap-2">
-            <p className="font-sans font-normal text-base leading-5 text-textColor">
+            <p className="font-sans font-normal text-base leading-5  text-textColor text-[16px]">
                 {label}
             </p>
             <input

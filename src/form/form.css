@@ -1,8 +1,16 @@
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
+input[type="range"]::-webkit-slider-thumb {
     appearance: none;
     width: 16px;
     height: 16px;
+    background-color: #761be4;
     border-radius: 50%;
-    background-color: #761be4; /* Purple color for the knob */
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background-color: #761be4;
+    border-radius: 50%;
+    cursor: pointer;
 }

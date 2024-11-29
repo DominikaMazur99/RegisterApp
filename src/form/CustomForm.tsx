@@ -63,7 +63,8 @@ function CustomForm() {
         });
     };
 
-    console.log(responseMessage);
+    console.log(formData);
+
     return (
         <div>
             <form

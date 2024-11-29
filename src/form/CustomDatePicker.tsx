@@ -45,13 +45,11 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
         );
 
         if (clickedDate.getDay() === 0) {
-            // Jeśli to niedziela
-            setInfo("Sundays are disabled..");
+            setInfo("Sundays are disabled.");
         } else if (clickedHoliday) {
-            // Jeśli to święto
             setInfo(`It is ${clickedHoliday.name}.`);
         } else {
-            setInfo(null); // Brak szczególnego opisu
+            setInfo(null);
         }
 
         if (
