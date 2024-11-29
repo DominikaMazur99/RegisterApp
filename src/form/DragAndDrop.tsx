@@ -40,7 +40,9 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ setFormData }) => {
         }
     };
 
-    const handleFileDelete = (e: any) => {
+    const handleFileDelete = (
+        e: React.MouseEvent<HTMLDivElement | HTMLButtonElement>
+    ) => {
         e.stopPropagation();
         e.preventDefault();
         setFileName(null);
