@@ -8,6 +8,7 @@ import {
     getStartDayOfMonth,
 } from "../helpers/helpers";
 import { Holiday, ICustomDatePicker } from "../interfaces/interfaces";
+import ErrorIcon from "../icons/ErrorIcon";
 
 const CustomDatePicker: React.FC<ICustomDatePicker> = ({
     setFormData,
@@ -36,16 +37,21 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
             currentMonth.getMonth(),
             day
         );
+
         const clickedHoliday = holidays?.find(
             (holiday) =>
                 new Date(holiday.date).toDateString() ===
                 clickedDate.toDateString()
         );
 
-        if (clickedHoliday?.type === "OBSERVANCE") {
-            setInfo(`${clickedHoliday.name}: ${clickedHoliday.type}`);
+        if (clickedDate.getDay() === 0) {
+            // Jeśli to niedziela
+            setInfo("Sundays are disabled..");
+        } else if (clickedHoliday) {
+            // Jeśli to święto
+            setInfo(`It is ${clickedHoliday.name}.`);
         } else {
-            setInfo(null);
+            setInfo(null); // Brak szczególnego opisu
         }
 
         if (
@@ -226,8 +232,11 @@ const CustomDatePicker: React.FC<ICustomDatePicker> = ({
                             <div>{renderCalendar()}</div>
                         </div>
                         {info && (
-                            <p className="text-sm text-gray-700">
-                                <span className="font-semibold">{info}</span>
+                            <p className="flex flex-row gap-1">
+                                <ErrorIcon backgroundColor="#CBB6E5" />
+                                <span className="text-textColor font-normal text-[14px] leading-[16.94px]">
+                                    {info}
+                                </span>
                             </p>
                         )}
                     </div>
